@@ -7,9 +7,9 @@ export const getBaseUrl = (): string => {
     const hostname = window.location.hostname;
     const isDev = hostname === "localhost" || hostname === "127.0.0.1";
 
-    // If running in production browser (e.g. Cloud Run) and envUrl is missing or points to localhost
-    if (!isDev && (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1"))) {
-      envUrl = "http://34.100.194.49";
+    // If envUrl is missing, localhost, or incorrectly set to the web-app IP (34.100.184.49)
+    if (!isDev && (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1") || envUrl.includes("34.100.184.49"))) {
+      envUrl = "http://34.100.194.49:7000";
     }
   }
 
