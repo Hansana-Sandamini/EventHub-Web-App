@@ -1,10 +1,28 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:7000";
+export const getBaseUrl = (): string => {
+  const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    const isDev = hostname === "localhost" || hostname === "127.0.0.1";
+
+    // If running in production browser (e.g. Cloud Run) and envUrl is missing or points to localhost
+    if (!isDev && (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1"))) {
+      return "http://34.100.194.49";
+    }
+  }
+
+  return envUrl || "http://localhost:7000";
+};
 
 export const api = axios.create({
-  baseURL: BASE_URL,
   timeout: 15000,
+});
+
+api.interceptors.request.use((config) => {
+  config.baseURL = getBaseUrl();
+  return config;
 });
 
 // ---------- Event Service ----------
@@ -62,7 +80,7 @@ export const eventsApi = {
     });
   },
   delete: (id: string) => api.delete(`/api/v1/events/${id}`),
-  getImageUrl: (id: string) => `${BASE_URL}/api/v1/events/${id}/image`,
+  getImageUrl: (id: string) => `${getBaseUrl()}/api/v1/events/${id}/image`,
 };
 
 // ---------- User Service ----------
@@ -111,7 +129,7 @@ export const usersApi = {
     });
   },
   delete: (nic: string) => api.delete(`/api/v1/users/${nic}`),
-  getPictureUrl: (nic: string) => `${BASE_URL}/api/v1/users/${nic}/picture`,
+  getPictureUrl: (nic: string) => `${getBaseUrl()}/api/v1/users/${nic}/picture`,
 };
 
 // ---------- Registration Service ----------
