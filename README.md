@@ -1,8 +1,22 @@
 # Web-app
 
-A modern, responsive frontend application for the **EventHub - Event & Ticketing Platform**. Built with Next.js App Router, React, and CSS custom properties, it provides a full UI for managing users, events, and ticket registrations through the API Gateway.
+A modern, responsive frontend application for the **EventHub - Event & Ticketing Platform**. Built with Next.js App Router, React 19, and CSS custom properties, it is deployed on **GCP Cloud Run** and connects to backend microservices via the GCP Load Balancer API Gateway (`http://35.200.169.73:7000`).
 
-## Tech Stack
+---
+
+## 👨‍🎓 Student & Project Metadata
+
+| Requirement | Details |
+|---|---|
+| **Student Name** | Hansana Sandamini |
+| **Student Number / ID** | `241722055` |
+| **Slack Handle** | `@Hansana_Sandamini` |
+| **GCP Project ID** | `eventhub-project-506715` |
+| **Module** | ITS 2130 - Enterprise Cloud Architecture (ECA) |
+
+---
+
+## ⚙️ Tech Stack
 
 | Technology | Details |
 |---|---|
@@ -14,17 +28,22 @@ A modern, responsive frontend application for the **EventHub - Event & Ticketing
 | Lucide React | Modern icon set |
 | React Hot Toast | Notification system |
 | date-fns | Date formatting utilities |
+| Deployment | GCP Cloud Run (Production) |
 
-## Features
+---
+
+## 📊 Features & Routes
 
 | Page / Feature | Path | Description |
 |---|---|---|
-| Dashboard | `/` | Stats overview (Total Users, Active Events, Registrations, Capacity), recent activity |
-| Users Management | `/users` | List, view profile, create user (`/users/new`), edit (`/users/[nic]/edit`), delete users |
-| Events Management | `/events` | List events, view details (`/events/[id]`), create event (`/events/new`), edit, seat stats |
-| Registration & Tickets | `/registrations` | View registrations with event filter, issue tickets (`/registrations/new`), cancel registrations |
+| **Dashboard** | `/` | Real-time statistics overview (Total Users, Active Events, Registrations, Capacity) |
+| **Users Management** | `/users` | List users, view profile, create (`/users/new`), edit (`/users/[nic]/edit`), delete |
+| **Events Management** | `/events` | List events, details (`/events/[id]`), create (`/events/new`), edit, seat tracking |
+| **Registration & Tickets** | `/registrations` | View registrations with event filter, issue tickets (`/registrations/new`), cancel |
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 web-app/
@@ -56,40 +75,38 @@ web-app/
 └── .env.local                # Local environment variables
 ```
 
-## Environment Variables
+---
 
-Create a `.env.local` file in the `web-app/` directory:
+## 🌐 Environment Variables
 
+### Production (GCP Cloud Run)
+Injected at build-time during GCP Cloud Build / Cloud Run deployment:
+```env
+NEXT_PUBLIC_API_BASE_URL=http://35.200.169.73:7000
+```
+
+### Development (Local)
+Create `.env.local` in the `web-app/` directory:
 ```env
 NEXT_PUBLIC_API_BASE_URL=http://localhost:7000
 ```
 
-## Getting Started
+---
 
-> **Prerequisites:** All backend services (Config-Server, Service-Registry, Api-Gateway, User-Service, Event-Service, Registration-Service) must be running before starting the web application.
+## 🚀 Getting Started
 
-**Full startup order:**
-1. Config-Server (`9000`)
-2. Service-Registry (`9001`)
-3. Api-Gateway (`7000`)
-4. User-Service (`8000`)
-5. Event-Service (`8001`)
-6. Registration-Service (`8002`)
-7. **Web-app** (`3000`)
+> **Prerequisites:** Backend services (`Config-Server`, `Service-Registry`, `Api-Gateway`, `User-Service`, `Event-Service`, `Registration-Service`) must be running before starting the web application.
 
-### Installation & Execution
+### Installation & Execution (Local)
 
-Install dependencies:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+2. Run local development server:
+   ```bash
+   npm run dev
+   ```
 
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The application will be accessible at: `http://localhost:3000`
-
+The application will be accessible at: `http://localhost:3000`.
