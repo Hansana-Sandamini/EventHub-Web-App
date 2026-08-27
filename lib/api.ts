@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getBaseUrl = (): string => {
-  const envUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  let envUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
@@ -9,11 +9,12 @@ export const getBaseUrl = (): string => {
 
     // If running in production browser (e.g. Cloud Run) and envUrl is missing or points to localhost
     if (!isDev && (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1"))) {
-      return "http://34.100.194.49";
+      envUrl = "http://34.100.194.49";
     }
   }
 
-  return envUrl || "http://localhost:7000";
+  const url = envUrl || "http://localhost:7000";
+  return url.endsWith("/") ? url.slice(0, -1) : url;
 };
 
 export const api = axios.create({
