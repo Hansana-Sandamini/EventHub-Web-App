@@ -9,7 +9,7 @@ export const getBaseUrl = (): string => {
 
     // If envUrl is missing, localhost, or incorrectly set to the web-app IP (34.100.184.49)
     if (!isDev && (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1") || envUrl.includes("34.100.184.49"))) {
-      envUrl = "http://34.100.194.49:7000";
+      envUrl = "http://35.200.169.73:7000";
     }
   }
 
